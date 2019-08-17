@@ -4,6 +4,52 @@ const express = require("express");
 const User = require("../models/user")
 const router = express.Router();
 
+//Login Page
+router.get("/login", (req, res, next) => {
+    res.render("auth/login");
+});
+
+// Post route for login
+router.post("/login", (req, res, next) => {
+
+    // get the username and password from form
+    const theUsername = req.body.username;
+    const thePassword = req.body.password;
+
+    if (theUsername === "" || thePassword === "") {
+        res.render("auth/login", {
+            errorMessage: "Please enter both, username and password to sign up."
+        });
+        return;
+    }
+
+    User.findOne({ "username": theUsername })
+        .then(user => {
+            if (!user) {
+                res.render("auth/login", {
+                    errorMessage: "The username doesn't exist."
+                });
+                return;
+            }
+            // IF USER EXSIST ^^^ ,COMPARE THE LOGIN PASSWORD WITH PASSWORD OF THAT USER RETURNED WITH THE USER NAME
+            //                          vv         vv  
+            if (bcrypt.compareSync(thePassword, user.password)) {
+
+                // Save the login in the session!
+                req.session.currentUser = user;
+                res.redirect("/");
+
+            } else {
+                res.render("auth/login", {
+                    errorMessage: "Incorrect password"
+                });
+            }
+        })
+        .catch(error => {
+            next(error);
+        })
+});
+
 // signup page given to user when they request
 router.get("/signup", (req, res, next) => {
     res.render("auth/signup");

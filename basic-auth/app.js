@@ -71,14 +71,16 @@ app.locals.title = 'Express - Generated with IronGenerator';
 //  ROUTES 
 //*********************************************************** */
 
-app.get("/", (req, res, next) => {
-  res.render("index");
-});
+// app.get("/", (req, res, next) => {
+//   res.render("index");
+// });
 
 // connect auth.js routes
 const authRouters = require('./routes/auth');
 app.use('/', authRouters);
 
+// connect site routes.js
+app.use('/', require('./routes/site-routes'));
 
 // TODO where does this get used?
 module.exports = app;
