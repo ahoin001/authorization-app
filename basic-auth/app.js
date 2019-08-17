@@ -49,17 +49,23 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
+// const hash1 = bcrypt.hashSync(plainPassword, salt);
+
+
+// console.log("Hash 1 -", hash1);
+
 
 //  ROUTES 
 //*********************************************************** */
 
 app.get("/", (req, res, next) => {
-  
   res.render("index");
 });
 
+// connect auth.js routes
 const authRouters = require('./routes/auth');
 app.use('/', authRouters);
 
 
+// TODO where does this get used?
 module.exports = app;
