@@ -37,6 +37,7 @@ router.post("/login", (req, res, next) => {
 
                 // Save the login in the session!
                 req.session.currentUser = user;
+                // redirect to home page
                 res.redirect("/");
 
             } else {
@@ -48,6 +49,13 @@ router.post("/login", (req, res, next) => {
         .catch(error => {
             next(error);
         })
+});
+
+router.get("/logout", (req, res, next) => {
+    req.session.destroy((err) => {
+        // cannot access session here so redirect to login
+        res.redirect("/login");
+    });
 });
 
 // signup page given to user when they request

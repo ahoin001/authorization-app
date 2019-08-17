@@ -10,7 +10,7 @@ const logger = require('morgan');
 const path = require('path');
 
 // Add Session and MongoStore to store session
-const session    = require("express-session");
+const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 
 mongoose
@@ -51,29 +51,16 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-
-
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-// const hash1 = bcrypt.hashSync(plainPassword, salt);
-
-
-// console.log("Hash 1 -", hash1);
-
-
 //  ROUTES 
 //*********************************************************** */
-
-// app.get("/", (req, res, next) => {
-//   res.render("index");
-// });
 
 // connect auth.js routes
 const authRouters = require('./routes/auth');
