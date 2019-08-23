@@ -18,4 +18,5 @@ router.get("/", (req, res, next) => {
     res.render("home");
 });
 
+// Allows us to use the router in other files
 module.exports = router;
